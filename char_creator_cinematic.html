@@ -1,0 +1,287 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
+
+.root{width:100%;min-height:700px;background:#05070e;display:flex;align-items:center;justify-content:center;padding:16px;position:relative;overflow:hidden;font-family:'Inter',sans-serif;}
+
+/* Fond cinématique */
+.bg-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,transparent 40%,rgba(0,0,0,0.7) 100%);}
+.bg-lines{position:absolute;inset:0;pointer-events:none;}
+.bg-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,35,149,0.06) 0%,transparent 70%);pointer-events:none;}
+
+/* INTRO CINÉMATIQUE */
+.intro{position:absolute;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#05070e;animation:intro-out 0.6s ease 2.8s both;}
+@keyframes intro-out{to{opacity:0;pointer-events:none;}}
+.intro-bars{position:absolute;top:0;left:0;right:0;height:80px;background:#000;}
+.intro-bars-b{position:absolute;bottom:0;left:0;right:0;height:80px;background:#000;}
+.intro-title{font-family:'Cinzel',serif;font-size:28px;font-weight:600;color:#fff;letter-spacing:6px;text-align:center;animation:title-reveal 0.8s ease 0.3s both;opacity:0;}
+@keyframes title-reveal{from{opacity:0;transform:translateY(12px);letter-spacing:20px;}to{opacity:1;transform:translateY(0);letter-spacing:6px;}}
+.intro-sub{font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:4px;text-transform:uppercase;margin-top:10px;animation:fade-in 0.6s ease 0.9s both;opacity:0;}
+@keyframes fade-in{from{opacity:0;}to{opacity:1;}}
+.intro-line{width:80px;height:1px;background:rgba(255,255,255,0.2);margin:16px auto 0;animation:line-expand 0.5s ease 1.2s both;transform:scaleX(0);}
+@keyframes line-expand{to{transform:scaleX(1);}}
+.intro-loading{margin-top:20px;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:3px;animation:fade-in 0.5s ease 1.6s both;opacity:0;}
+
+/* LAYOUT */
+.layout{position:relative;z-index:2;width:100%;max-width:820px;display:grid;grid-template-columns:220px 1fr;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;background:rgba(10,12,22,0.95);opacity:0;animation:layout-in 0.7s ease 3.1s both;}
+@keyframes layout-in{from{opacity:0;transform:scale(0.97) translateY(8px);}to{opacity:1;transform:scale(1) translateY(0);}}
+
+/* TOPBAR */
+.topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(6,8,16,0.9);}
+.top-l{display:flex;align-items:center;gap:12px;}
+.top-icon{width:34px;height:34px;border-radius:9px;background:rgba(0,35,149,0.25);border:1px solid rgba(107,159,255,0.2);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.top-title{font-family:'Cinzel',serif;font-size:14px;color:#fff;letter-spacing:1px;}
+.top-sub{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
+.steps{display:flex;align-items:center;gap:5px;}
+.st{display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.22);font-weight:500;letter-spacing:0.5px;}
+.st.active{color:rgba(107,159,255,0.85);}
+.st.done{color:rgba(93,202,165,0.7);}
+.st-n{width:18px;height:18px;border-radius:50%;border:1px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:9px;}
+.st-sep{width:16px;height:1px;background:rgba(255,255,255,0.1);}
+
+/* LEFT */
+.left{border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;background:rgba(7,9,18,0.6);}
+.l-head{padding:13px 14px 10px;font-size:9px;font-weight:600;color:rgba(255,255,255,0.2);letter-spacing:2.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.06);}
+
+.sexe-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;}
+.sx-btn{padding:11px 8px;border-radius:10px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);cursor:pointer;text-align:center;transition:all 0.18s;}
+.sx-btn:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.14);}
+.sx-btn.m{border-color:rgba(107,159,255,0.45);background:rgba(0,35,149,0.18);}
+.sx-btn.f{border-color:rgba(237,41,57,0.45);background:rgba(237,41,57,0.1);}
+.sx-ico{font-size:20px;display:block;margin-bottom:4px;}
+.sx-lbl{font-size:11px;font-weight:500;}
+.sx-btn.m .sx-lbl{color:#6b9fff;}
+.sx-btn.f .sx-lbl{color:#ff7070;}
+.sx-btn:not(.m):not(.f) .sx-lbl{color:rgba(255,255,255,0.4);}
+.sx-ct{font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;}
+
+.sk-scroll{flex:1;overflow-y:auto;padding:8px;}
+.sk-scroll::-webkit-scrollbar{width:2px;}
+.sk-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:99px;}
+.sk-hint{padding:20px 10px;text-align:center;font-size:11px;color:rgba(255,255,255,0.18);line-height:1.8;}
+.sk-card{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;border:1px solid transparent;cursor:pointer;transition:all 0.15s;margin-bottom:4px;animation:sk-in 0.2s ease both;}
+@keyframes sk-in{from{opacity:0;transform:translateX(-6px);}to{opacity:1;transform:translateX(0);}}
+.sk-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);transform:translateX(2px);}
+.sk-card.sel{background:rgba(0,35,149,0.2);border-color:rgba(107,159,255,0.4);}
+.sk-card.sel-f{background:rgba(237,41,57,0.12);border-color:rgba(237,41,57,0.35);}
+.sk-av{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.sk-av.m{background:rgba(0,35,149,0.3);color:#6b9fff;}
+.sk-av.f{background:rgba(237,41,57,0.2);color:#ff7070;}
+.sk-nm{font-size:10px;font-weight:500;color:rgba(220,222,242,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
+.sk-pk{font-size:9px;color:rgba(255,255,255,0.25);margin-top:1px;}
+.sk-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.12);flex-shrink:0;transition:all 0.2s;}
+.sk-card.sel .sk-dot{background:#6b9fff;box-shadow:0 0 4px rgba(107,159,255,0.6);}
+.sk-card.sel-f .sk-dot{background:#ff7070;box-shadow:0 0 4px rgba(255,100,100,0.6);}
+
+/* RIGHT */
+.right{padding:20px 22px;display:flex;flex-direction:column;gap:15px;overflow-y:auto;}
+.right::-webkit-scrollbar{width:2px;}
+.right::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:99px;}
+
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.f{display:flex;flex-direction:column;gap:5px;}
+.flbl{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.28);}
+.finp{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:8px;padding:10px 13px;color:#e8e9f2;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:all 0.18s;width:100%;}
+.finp:focus{border-color:rgba(107,159,255,0.5);background:rgba(107,159,255,0.04);}
+.finp::placeholder{color:rgba(255,255,255,0.12);}
+textarea.finp{resize:none;height:62px;line-height:1.6;}
+
+.sep{height:1px;background:rgba(255,255,255,0.06);}
+
+/* PREVIEW CARD */
+.prev-card{display:flex;align-items:center;gap:14px;padding:13px 15px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden;}
+.prev-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:rgba(107,159,255,0.6);border-radius:99px;}
+.prev-av{width:42px;height:42px;border-radius:50%;background:rgba(107,159,255,0.12);border:1px solid rgba(107,159,255,0.22);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6b9fff;flex-shrink:0;transition:all 0.25s;}
+.prev-ico{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
+.prev-nm{font-size:14px;font-weight:500;color:#e8e9f2;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prev-mt{font-size:10px;color:rgba(255,255,255,0.3);margin-top:3px;}
+
+.errline{font-size:11px;color:#ff7070;min-height:14px;display:flex;align-items:center;gap:5px;}
+
+/* CONFIRM BTN */
+.cbtn{width:100%;padding:13px;border-radius:10px;background:rgba(0,35,149,0.4);border:1px solid rgba(107,159,255,0.3);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.18s;position:relative;overflow:hidden;letter-spacing:0.3px;}
+.cbtn::after{content:'';position:absolute;left:-80%;top:0;width:50%;height:100%;background:rgba(255,255,255,0.05);transform:skewX(-18deg);animation:shimmer 3.5s ease-in-out infinite;}
+@keyframes shimmer{0%{left:-80%;}100%{left:160%;}}
+.cbtn:hover{background:rgba(26,58,200,0.5);border-color:rgba(107,159,255,0.5);transform:translateY(-1px);}
+.cbtn:active{transform:scale(0.99);}
+.cbtn.ok{background:rgba(10,94,64,0.5);border-color:rgba(93,202,165,0.4);}
+.note{font-size:9px;color:rgba(255,255,255,0.12);text-align:center;letter-spacing:0.5px;}
+</style>
+
+<!-- INTRO CINÉMATIQUE -->
+<div class="intro" id="intro">
+  <div class="intro-bars"></div>
+  <div class="intro-bars-b"></div>
+  <div class="intro-title">FRANCE LIFE</div>
+  <div class="intro-sub">Roleplay · Serious RP</div>
+  <div class="intro-line"></div>
+  <div class="intro-loading">CRÉATION DE PERSONNAGE</div>
+</div>
+
+<div class="root">
+<canvas class="bg-lines" id="bgc" style="position:absolute;inset:0;pointer-events:none;"></canvas>
+<div class="bg-vignette"></div>
+<div class="bg-glow"></div>
+
+<div class="layout">
+
+  <div class="topbar">
+    <div class="top-l">
+      <div class="top-icon">⚔️</div>
+      <div>
+        <div class="top-title">FRANCE LIFE ROLEPLAY</div>
+        <div class="top-sub">Création de personnage</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="st active" id="st1"><div class="st-n">1</div>Identité</div>
+      <div class="st-sep"></div>
+      <div class="st" id="st2"><div class="st-n">2</div>Apparence</div>
+      <div class="st-sep"></div>
+      <div class="st" id="st3"><div class="st-n">3</div>Histoire</div>
+    </div>
+  </div>
+
+  <div class="left">
+    <div class="l-head">Tenue du personnage</div>
+    <div class="sexe-grid">
+      <div class="sx-btn" id="bh" onclick="setSexe('H')">
+        <span class="sx-ico">♂</span>
+        <span class="sx-lbl">Homme</span>
+        <div class="sx-ct">5 tenues</div>
+      </div>
+      <div class="sx-btn" id="bf" onclick="setSexe('F')">
+        <span class="sx-ico">♀</span>
+        <span class="sx-lbl">Femme</span>
+        <div class="sx-ct">6 tenues</div>
+      </div>
+    </div>
+    <div class="sk-scroll" id="skroll">
+      <div class="sk-hint">Sélectionne ton sexe<br/>pour voir les tenues</div>
+    </div>
+  </div>
+
+  <div class="right">
+
+    <div class="fg">
+      <div class="f"><div class="flbl">Prénom *</div><input class="finp" id="pr" placeholder="Jean" oninput="upd()"/></div>
+      <div class="f"><div class="flbl">Nom *</div><input class="finp" id="nm" placeholder="Dupont" oninput="upd()"/></div>
+    </div>
+
+    <div class="fg">
+      <div class="f"><div class="flbl">Âge * (18–80)</div><input class="finp" id="ag" type="number" min="18" max="80" placeholder="25" oninput="upd()"/></div>
+      <div class="f"><div class="flbl">Sexe</div><input class="finp" id="sx" readonly placeholder="Non sélectionné" style="cursor:default;"/></div>
+    </div>
+
+    <div class="f"><div class="flbl">Histoire (optionnel)</div><textarea class="finp" id="hi" placeholder="Décris brièvement l'histoire ou la personnalité de ton personnage..."></textarea></div>
+
+    <div class="sep"></div>
+
+    <div class="prev-card">
+      <div class="prev-av" id="pav">??</div>
+      <div class="prev-ico" id="pico">—</div>
+      <div style="flex:1;min-width:0;">
+        <div class="prev-nm" id="pnm">Nouveau personnage</div>
+        <div class="prev-mt" id="pmt">En attente de saisie...</div>
+      </div>
+    </div>
+
+    <div class="errline" id="err"></div>
+
+    <button class="cbtn" id="cbtn" onclick="doConfirm()">
+      ✦ &nbsp;Créer mon personnage
+    </button>
+    <div class="note">Ce menu ne peut pas être fermé sans valider.</div>
+
+  </div>
+</div>
+</div>
+
+<script>
+const SK={
+  H:[
+    {nm:'Hoodie & Jean 01',pk:'Smalls Pack 2',av:'H1'},
+    {nm:'Hoodie & Jean 02',pk:'Smalls Pack 2',av:'H2'},
+    {nm:'Costume Cravate 01',pk:'Suits Pack',av:'CC'},
+    {nm:'Costume Cravate 02',pk:'Suits Pack',av:'C2'},
+    {nm:'Chemise Élégante',pk:'Suits Pack',av:'CH'},
+  ],
+  F:[
+    {nm:'Veste Zippée 01',pk:'Smalls Pack 1',av:'V1'},
+    {nm:'Parka & Sweats 03',pk:'Smalls Pack 2',av:'P3'},
+    {nm:'Veste Zippée 03',pk:'Smalls Pack 1',av:'V3'},
+    {nm:'Parka & Sweats 04',pk:'Smalls Pack 2',av:'P4'},
+    {nm:'Veste Zippée 07',pk:'Smalls Pack 1',av:'V7'},
+    {nm:'Tailleur',pk:'Kaesar Suits',av:'TL'},
+  ]
+};
+let sex='',idx=-1,sknm='';
+
+function setSexe(s){
+  sex=s;idx=-1;sknm='';
+  document.getElementById('bh').className='sx-btn'+(s==='H'?' m':'');
+  document.getElementById('bf').className='sx-btn'+(s==='F'?' f':'');
+  document.getElementById('sx').value=s==='H'?'Homme':'Femme';
+  const sc=document.getElementById('skroll');sc.innerHTML='';
+  SK[s].forEach((sk,i)=>{
+    const d=document.createElement('div');
+    d.className='sk-card';d.id='k'+i;
+    d.style.animationDelay=(i*0.05)+'s';
+    d.innerHTML=`<div class="sk-av ${s==='H'?'m':'f'}">${sk.av}</div><div style="flex:1;min-width:0;"><div class="sk-nm">${sk.nm}</div><div class="sk-pk">${sk.pk}</div></div><div class="sk-dot"></div>`;
+    d.onclick=()=>selSk(i,sk,s);
+    sc.appendChild(d);
+  });
+  document.getElementById('st2').className='st active';
+  upd();
+}
+
+function selSk(i,sk,s){
+  document.querySelectorAll('.sk-card').forEach(c=>c.className='sk-card');
+  document.getElementById('k'+i).className='sk-card '+(s==='H'?'sel':'sel-f');
+  idx=i;sknm=sk.nm;
+  document.getElementById('pico').innerHTML=`<div class="sk-av ${s==='H'?'m':'f'}" style="width:26px;height:26px;font-size:9px;">${sk.av}</div>`;
+  document.getElementById('st2').className='st done';
+  document.getElementById('st3').className='st active';
+  upd();
+}
+
+function upd(){
+  const p=document.getElementById('pr').value.trim();
+  const n=document.getElementById('nm').value.trim();
+  const a=document.getElementById('ag').value;
+  document.getElementById('pav').textContent=((p[0]||'?')+(n[0]||'?')).toUpperCase();
+  document.getElementById('pnm').textContent=(p||'Prénom')+' '+(n||'Nom');
+  const m=[];if(a)m.push(a+' ans');if(sex)m.push(sex==='H'?'Homme':'Femme');if(sknm)m.push(sknm);
+  document.getElementById('pmt').textContent=m.length?m.join(' · '):'En attente de saisie...';
+  if(p&&n)document.getElementById('st1').className='st done';
+}
+
+function doConfirm(){
+  const p=document.getElementById('pr').value.trim();
+  const n=document.getElementById('nm').value.trim();
+  const a=parseInt(document.getElementById('ag').value);
+  const err=document.getElementById('err');
+  const btn=document.getElementById('cbtn');
+  if(!p){err.textContent='→ Entre ton prénom.';return;}
+  if(!n){err.textContent='→ Entre ton nom de famille.';return;}
+  if(!a||a<18||a>80){err.textContent='→ Âge invalide (18–80 ans).';return;}
+  if(!sex){err.textContent='→ Choisis un sexe.';return;}
+  if(idx<0){err.textContent='→ Choisis une tenue dans le panneau gauche.';return;}
+  err.textContent='';
+  btn.innerHTML='✦ &nbsp;Personnage créé !';
+  btn.classList.add('ok');
+  setTimeout(()=>{btn.innerHTML='✦ &nbsp;Créer mon personnage';btn.classList.remove('ok');},2500);
+}
+
+const c=document.getElementById('bgc');
+const ctx=c.getContext('2d');
+function resize(){c.width=c.offsetWidth;c.height=c.offsetHeight;draw();}
+function draw(){
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.strokeStyle='rgba(255,255,255,0.022)';ctx.lineWidth=1;
+  for(let x=0;x<c.width;x+=48){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,c.height);ctx.stroke();}
+  for(let y=0;y<c.height;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke();}
+}
+resize();
+</script>
